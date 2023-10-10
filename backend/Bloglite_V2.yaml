@@ -1,0 +1,1165 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: BlogLite_V2
+  description: >
+    <div>Blog Lite application helps the users to connect their friends, family members etc. They can share the photos & videos with the people in your life.</div>
+    <br>
+    <div>It is the API for the blog lite application developed using Flask-RESTful and Flask-SQLAlchemy.</div>
+    
+    <h2>Database Schema</h2>
+    
+    <h3>roles_users Table</h3>
+    <table>
+      <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key("user.id")</td>
+            </tr>
+            <tr>
+                <td>role_id</td>
+                <td>Integer</td>
+                <td>Foreign Key("role.id")</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>role Table</h3>
+    <table>
+      <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>String</td>
+                <td>Unique</td>
+            </tr>
+            <tr>
+                <td>description</td>
+                <td>String</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>user Table</h3>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Unique, Not Null</td>
+            </tr>
+            <tr>
+                <td>fullname</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>username</td>
+                <td>String</td>
+                <td>Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>email</td>
+                <td>String</td>
+                <td>Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>mobile_number</td>
+                <td>Integer</td>
+                <td>Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>created_date</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>updated_date</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>active</td>
+                <td>Integer</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>fs_uniquifier</td>
+                <td>String</td>
+                <td>Not Null, Unique</td>
+            </tr>
+        </tbody>
+    </table>   
+    
+    <h3>userposts table</h3>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>post_id</td>
+                <td>Integer</td>
+                <td>Primary Key, Unique</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key ("user.user_id")</td>
+            </tr>
+            <tr>
+                <td>username</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>post_img</td>
+                <td>Blob</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>img_filename</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+              <td>mimetype</td>
+              <td>String</td>
+              <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>post_name</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>post_caption</td>
+                <td>String</td>
+                <td>--</td>
+            </tr>
+            <tr>
+                <td>created_date</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>updated_date</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>isArchive</td>
+                <td>Integer</td>
+                <td>Not Null, Default 0</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>comments table</h3>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>comment_id</td>
+                <td>Integer</td>
+                <td>Primary Key, Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key ("user.id")</td>
+            </tr>
+             <tr>
+                <td>post_id</td>
+                <td>Integer</td>
+                <td>Foreign Key ("userposts.post_id")</td>
+            </tr>
+            <tr>
+                <td>text</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>created_date</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>likes table</h3>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>like_id</td>
+                <td>Integer</td>
+                <td>Primary Key, Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key ("user.id")</td>
+            </tr>
+             <tr>
+                <td>post_id</td>
+                <td>Integer</td>
+                <td>Foreign Key ("userposts.post_id")</td>
+            </tr>
+            <tr>
+                <td>created_date</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>followers_list table</h3>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key ("user.id")</td>
+            </tr>
+            <tr>
+                <td>follower_id</td>
+                <td>Integer</td>
+                <td>Not Null</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>following_list table</h3>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Not Null, Unique</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key ("user.id")</td>
+            </tr>
+            <tr>
+                <td>following_id</td>
+                <td>Integer</td>
+                <td>Not Null</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Error Codes</h2>
+    <table>
+      <thead>
+        <th>Resource</th>
+        <th>Error Code</th>
+        <th>Message</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>user</td>
+          <td>BE1001</td>
+          <td>Email is required.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1002</td>
+          <td>Mobile Number is required.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1003</td>
+          <td>Full Name is required.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1004</td>
+          <td>Username is required.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1005</td>
+          <td>Password is required.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1006</td>
+          <td>Invalid Email.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1007</td>
+          <td>Invalid Mobile Number.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1008</td>
+          <td>Password must have 8-16 characters, a capital letter, small letter, number & special character[!@#$%_].</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1009</td>
+          <td>User already exists.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1010</td>
+          <td>Duplicate Email.</td>
+        </tr>
+        <tr>
+          <td>user</td>
+          <td>BE1011</td>
+          <td>Duplicate Mobile Number.</td>
+        </tr>
+      </tbody>
+    </table>
+    
+     
+  contact:
+    email: 20f1002775@student.onlinedegree.iitm.ac.in
+    
+tags:
+  - name: UserAPI
+    description: User
+  - name: UserProfileAPI
+    description: User profile
+  - name: FeedAPI
+    description: User Feed
+  - name: BlogAPI
+    description: Blog/Post uploaded by user
+  - name: ConnectionsAPI
+    description: User Connections
+  - name: LikeAPI
+    description: Like or unlike a post
+  - name: CommentAPI
+    description: Comment on a post
+  - name: ArchiveBlog
+    description: Archive or unarchive a post
+  - name: FollowUnfollowAPI
+    description: Follow or Unfollow a user
+  - name: SearchAPI
+    description: Search for user
+  - name: ExportBlogsAPI
+    description: Export the blogs
+    
+servers: 
+   - url: http://127.0.0.1:5555/
+paths:
+  /api/{email}:
+    get:
+      tags:
+        - UserAPI
+      summary: get user data
+      description: Operation to get user data
+      operationId: getUserData
+      parameters:
+        - name: email
+          in: path
+          description: Enter email
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  fullname:
+                    type: string
+                  email:
+                    type: string
+                  mobile_number:
+                    type: integer
+        "400":
+          description: Bad request.
+        "404":
+          description: User not found.
+        "500":
+          description: Internal server error
+          
+  /api/register:  
+    post:
+      tags:
+        - UserAPI
+      summary: create/register a new user
+      description: Operation to create/register new user
+      operationId: postUserData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                   type: string
+                   example: example@gmail.com
+                mobile:
+                   type: integer
+                   example: 1234567980
+                name:
+                  type: string
+                  example: example
+                username:
+                  type: string
+                  example: example_123
+                password:
+                  type: string
+                  example: example_password
+      responses:
+        "201":
+          description: successful operation
+        "400":
+          description: Bad request
+        "500":
+           description: Internal Server error
+   
+  /api/edit_profile:
+    description: End point to read a user resource with username
+    put:
+      tags:
+        - UserAPI
+      summary: edit the user details
+      description: Operation to edit user/profile details
+      operationId: putUserData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                   type: string
+                   example: Example_123
+                fullname:
+                   type: string
+                   example: Example
+                mobile_number:
+                   type: integer
+                   example: 9874563210
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  fullname:
+                    type: string
+                  email:
+                    type: string
+                  mobile_number:
+                    type: integer
+        "400":
+          description: Bad request.
+        "404":
+          description: User not found.
+        "500":
+          description: Internal server error
+          
+  /api/delete_profile:
+    delete:
+      tags:
+        - UserAPI
+      summary: delete a user/profile
+      description: Operation to delete user/profile
+      operationId: deleteUserData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                   type: string
+                   example: Example_123
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: User not found
+        "500":
+           description: Internal server error
+           
+  /api/profile/{username}:
+    get:
+      tags:
+        - UserProfileAPI
+      summary: fetches user profile data
+      description: Operation to fetch user profile data
+      operationId: getUserProfileData
+      parameters:
+        - name: username
+          in: path
+          description: Enter username
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  fullname:
+                    type: string
+                  email:
+                    type: string
+                  mobile_number:
+                    type: integer
+                  userposts:
+                    type: object
+                  followers_list:
+                     type: object
+                  following_list:
+                    type: object
+                  
+        "400":
+          description: Bad request.
+        "404":
+          description: User not found.
+        "500":
+          description: Internal server error
+  
+  /api/connections/{username}:
+    get:
+      tags:
+        - ConnectionsAPI
+      summary: fetches user following & followers data
+      description: Operation to fetch user following & followers data
+      operationId: getUserConnectionsData
+      parameters:
+        - name: username
+          in: path
+          description: Enter username
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  followers:
+                    type: object
+                  following:
+                    type: object
+                  
+        "400":
+          description: Bad request.
+        "404":
+          description: User not found.
+        "500":
+          description: Internal server error
+    
+  /api/feed/{username}:
+    get:
+      tags:
+        - FeedAPI
+      summary: fetches user feed data
+      description: Operation to fetch user feed data
+      operationId: getUserFeedData
+      parameters:
+        - name: username
+          in: path
+          description: Enter username
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  post_id:
+                     type: integer
+                  user_id:
+                     type: integer
+                  username:
+                     type: string
+                  post_name:
+                     type: string
+                  post_caption:
+                     type: string
+                  post_img:
+                     type: string
+                  created_date:
+                     type: string
+                  updated_date:
+                     type: string
+                  isArchive:
+                     type: boolean
+                  comments:
+                      type: object
+                  likes:
+                      type: object
+                      
+        "400":
+          description: Bad request.
+        "404":
+          description: User not found.
+        "500":
+          description: Internal server error
+        
+  /api/post/{post_id}:
+    get:
+      tags:
+        - BlogAPI
+      summary: gets blog data
+      description: Operation to retrieve blog data
+      operationId: getBlogData
+      parameters:
+        - name: post_id
+          in: path
+          description: Enter post_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                  username:
+                    type: string
+                  post_id:
+                    type: integer
+                  post_name:
+                    type: string
+                  post_caption:
+                    type: string
+                  post_img:
+                    type: string
+                  is_archive:
+                    type: boolean
+        "400":
+          description: Bad request.
+        "404":
+          description: Blog not found.
+        "500":
+          description: Internal server error
+          
+  /api/addpost:
+    post:
+      tags:
+        - BlogAPI
+      summary: uploads a blog
+      description: Operation to create and upload a blog to user profile
+      operationId: createBlog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                post_name:
+                  type: string
+                  example: myblog
+                post_caption:
+                  type: string
+                  example: my caption/description of the blog
+                post_img:
+                  type: string
+                img_filename:
+                  type: string
+
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Could not upload blog
+        "500":
+          description: Internal server error
+
+  /api/edit_post:
+    description: End point to edit a blog
+    put:
+      tags:
+        - BlogAPI
+      summary: edit a blog
+      description: Operation to edit a blog
+      operationId: putBlogData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                post_id:
+                  type: integer
+                post_name:
+                  type: string
+                  example: myblog
+                post_caption:
+                  type: string
+                  example: my caption/description of the blog
+                post_img:
+                  type: string
+                img_filename:
+                  type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  fullname:
+                    type: string
+                  email:
+                    type: string
+                  mobile_number:
+                    type: integer
+                  userposts:
+                    type: object
+                  followers_list:
+                     type: object
+                  following_list:
+                    type: object
+        "400":
+          description: Bad request.
+        "404":
+          description: User not found.
+        "500":
+          description: Internal server error
+          
+  /api/delete_post:        
+    delete:
+      tags:
+        - BlogAPI
+      summary: delete a blog
+      description: Operation to delete a blog from user profile
+      operationId: deleteBlog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                post_id:
+                  type: integer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  fullname:
+                    type: string
+                  email:
+                    type: string
+                  mobile_number:
+                    type: integer
+                  userposts:
+                    type: object
+                  followers_list:
+                     type: object
+                  following_list:
+                    type: object
+        "404":
+          description: Blog not found
+        "500":
+           description: Internal server error
+  
+  /api/toggle_like:
+    put:
+      tags:
+        - LikeAPI
+      summary: Like or unlike a post
+      description: Operation to like or unlike a post
+      operationId: putLike
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                   type: integer
+                post_id:
+                   type: integer
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Bad request.
+        "404":
+          description: Post not found.
+        "500":
+          description: Internal server error
+          
+  /api/add_comment:
+    post:
+      tags:
+        - CommentAPI
+      summary: create a comment on post
+      description: Operation to create a comment on post
+      operationId: createComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                post_id:
+                  type: integer
+                text:
+                  type: string
+      responses:
+        "200":
+          description: successful operation 
+        "400":
+          description: Post not exist
+        "500":
+          description: Internal server error
+ 
+  /api/delete_comment:
+    delete:
+      tags:
+        - BlogAPI
+      summary: delete a comment
+      description: Operation to delete a comment
+      operationId: deleteComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment_id:
+                  type: string
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: Comment not found
+        "500":
+           description: Internal server error
+  
+  /api/{username}/archived_posts:
+    get:
+      tags:
+        - ArchiveBlog
+      summary: fetches user archived posts
+      description: Operation to fetch user archived posts
+      operationId: getUserArchivedPosts
+      parameters:
+        - name: username
+          in: path
+          description: Enter username
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  post_id:
+                     type: integer
+                  user_id:
+                     type: integer
+                  username:
+                     type: string
+                  post_name:
+                     type: string
+                  post_caption:
+                     type: string
+                  post_img:
+                     type: string
+                  created_date:
+                     type: string
+                  updated_date:
+                     type: string
+                  isArchive:
+                     type: boolean
+                  comments:
+                      type: object
+                  likes:
+                      type: object
+                      
+  /api/archive_post:
+    put:
+      tags:
+        - ArchiveBlog
+      summary: archive a blog
+      description: Operation to archive a blog
+      operationId: putArchivePost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                post_id:
+                  type: integer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  fullname:
+                    type: string
+                  email:
+                    type: string
+                  mobile_number:
+                    type: integer
+                  userposts:
+                    type: object
+                  followers_list:
+                     type: object
+                  following_list:
+                    type: object
+        "400":
+          description: Bad request.
+        "404":
+          description: Post not found.
+        "500":
+          description: Internal server error
+      
+  /api/follow:
+    post:
+      tags:
+        - FollowUnfollowAPI
+      summary: follow a user
+      description: Operation to follow a user
+      operationId: FollowUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                follow_id:
+                  type: integer
+                follow_username:
+                  type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Bad request.
+        "500":
+          description: Internal server error
+    
+  /api/unfollow:
+    put:
+      tags:
+        - FollowUnfollowAPI
+      summary: unfollow a user
+      description: Operation to unfollow a user
+      operationId: UnfollowUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                unfollow_id:
+                  type: integer
+                unfollow_username:
+                  type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Bad request.
+        "500":
+          description: Internal server error
+   
+  /api/remove_follower:
+    delete:
+      tags:
+        - FollowUnfollowAPI
+      summary: unfollow a user
+      description: Operation to unfollow a user
+      operationId: RemoveFollower
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                follower_username:
+                  type: string
+                follower_id:
+                  type: integer
+                user_id:
+                  type: integer
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Bad request.
+        "500":
+          description: Internal server error
+    
+  /api/search:
+    post:
+      tags:
+        - SearchAPI
+      summary: search a user
+      description: Operation to search for a user
+      operationId: SearchUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                search_word:
+                  type: string
+                search_by:
+                  type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Bad request.
+        "500":
+          description: Internal server error
+  
+  /api/export_blogs/{username}:
+    get:
+      tags:
+        - ExportBlogsAPI
+      summary: exports the user blogs in csv format
+      description: Operation to export the user blogs in csv format
+      operationId: ExportBlogs
+      parameters:
+        - name: username
+          in: path
+          description: Enter username
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Bad request.
+        "404":
+          description: User not found.
+        "500":
+          description: Internal server error
