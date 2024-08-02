@@ -36,7 +36,7 @@ Flask-WTF==1.1.1
 fonttools==4.43.0
 greenlet==2.0.1
 html5lib==1.1
-idna==3.4
+idna==3.7
 imageio==2.24.0
 importlib-metadata==5.1.0
 importlib-resources==5.12.0
