@@ -33,7 +33,7 @@ flask-restplus==0.13.0
 Flask-Security-Too==5.1.2
 Flask-SQLAlchemy==3.0.2
 Flask-WTF==1.1.1
-fonttools==4.39.3
+fonttools==4.43.0
 greenlet==2.0.1
 html5lib==1.1
 idna==3.4
