@@ -45,7 +45,7 @@
           </b-col>
         </b-row>
         <div class="footer">
-          <p>© 2023 Blog Lite</p>
+          <p>© 2025 Blog Lite</p>
         </div>
       </b-container>
     </div>

@@ -14,7 +14,7 @@
                 </div>
                 <br/><br/>
 
-                <div v-if="searchResults.length > 0" class="search-results">
+                <div v-if="searchResults.length>0" class="search-results">
                         <div v-for="(user, index) in searchResults" :key="index" class="search-result">
                             <div>
                                 {{ index + 1 }} .
@@ -67,7 +67,7 @@ export default {
     },
     methods: {
         search() {
-            if (this.searchText !== []) {
+            if (this.searchText.trim() !== '') {
                 const payload = {
                     query: this.searchText,
                     search_by: this.$store.getters.getLoggedInUsername
@@ -82,8 +82,8 @@ export default {
                 })
                     .then(response => response.json())
                     .then(data => {
-                        this.searchResults = data.users
-                        this.followingIds = data.following_ids
+                        this.searchResults = data.users || [];
+                        this.followingIds = data.following_ids || [];
                         // this.searchResults = data.users.map(user => ({ username: user.username }));
                     })
                     .catch(error => {
