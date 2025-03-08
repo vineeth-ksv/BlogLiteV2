@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask_restful import Resource, Api
 from flask_security import Security, SQLAlchemyUserDatastore
-from application import config, workers
+from application import config
 from application.config import LocalDevelopmentConfig
 from application.database import db
 from application.models import User, Role
@@ -10,10 +10,9 @@ from flask_cors import CORS
 
 app = None
 api = None
-celery = None
 
 def create_app():
-    app = Flask(__name__, template_folder="templates")
+    app = Flask(__name__)
     IMAGES_FOLDER = os.path.join('static', 'images')
     app.config['IMAGES_FOLDER'] = IMAGES_FOLDER
 
@@ -27,31 +26,16 @@ def create_app():
     user_datastore = SQLAlchemyUserDatastore(db, User, Role)
     security = Security(app, user_datastore)
 
-    # Initialize Celery
-    celery = workers.celery
-    celery.conf.update(
-        broker_url=app.config["CELERY_BROKER_URL"],
-        result_backend=app.config["CELERY_RESULT_BACKEND"],
-    )
-    celery.Task = workers.ContextTask
-    app.app_context().push()
-
     api = Api(app)
     app.app_context().push()
 
     CORS(app, supports_credentials=True)
     app.config['CORS_HEADERS'] = 'application/json'
     
-    return app, api, celery
+    return app, api
 
-app, api, celery = create_app()
+app, api = create_app()
 app.secret_key = os.urandom(24)
-
-# Import all the controllers so they are loaded
-from application.controllers import *
-
-# Import all tasks
-from application.tasks import *
 
 # Add all restful controllers
 from application.api import *

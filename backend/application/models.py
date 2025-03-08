@@ -128,10 +128,3 @@ class Following_List(db.Model):
                 "user_id": self.user_id,
                 "following_id": self.following_id
             }
-
-# class ProfilePics(db.Model):
-#     __tablename__ = 'profilepics'
-#     profilepic_id = db.Column(db.Integer, primary_key=True, autoincrement = True, unique = True, nullable = False)
-#     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
-#     profilepic_name = db.Column(db.Text, nullable=False)
-#     profilepic_img = db.Column(db.LargeBinary, nullable=False)

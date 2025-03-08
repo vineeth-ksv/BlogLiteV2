@@ -9,14 +9,6 @@ class Config():
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     WTF_CSRF_ENABLED = False
     SECURITY_TOKEN_AUTHENTICATION_HEADER = "Authentication-Token"
-    CELERY_BROKER_URL = "redis://localhost:6379/1"
-    CELERY_RESULT_BACKEND = "redis://localhost:6379/2"
-    REDIS_URL = "redis://localhost:6379"
-    CACHE_TYPE = "RedisCache"
-    CACHE_DEFAULT_TIMEOUT = 300
-    CACHE_REDIS_HOST = "localhost"
-    CACHE_REDIS_PORT = 6379
-    CACHE_REDIS_DB = 9
 
 class LocalDevelopmentConfig(Config):
     SQLITE_DB_DIR = os.path.join(basedir, "../db_directory")
@@ -32,14 +24,6 @@ class LocalDevelopmentConfig(Config):
     WTF_CSRF_ENABLED = False
     SECURITY_FRESHNESS = timedelta(minutes=30)
     SECURITY_FRESHNESS_GRACE_PERIOD = timedelta(minutes=5)
-    CELERY_BROKER_URL = "redis://localhost:6379/1"
-    CELERY_RESULT_BACKEND = "redis://localhost:6379/2"
-    REDIS_URL = "redis://localhost:6379"
-    CACHE_TYPE = "RedisCache"
-    CACHE_DEFAULT_TIMEOUT = 300
-    CACHE_REDIS_HOST = "localhost"
-    CACHE_REDIS_PORT = 6379
-    CACHE_REDIS_DB = 9 
 
 class StageConfig(Config):
     SQLITE_DB_DIR = os.path.join(basedir, "../db_directory")
@@ -54,11 +38,3 @@ class StageConfig(Config):
     WTF_CSRF_ENABLED = False
     SECURITY_FRESHNESS = timedelta(minutes=30)
     SECURITY_FRESHNESS_GRACE_PERIOD = timedelta(minutes=5)
-    CELERY_BROKER_URL = "redis://localhost:6379/1"
-    CELERY_RESULT_BACKEND = "redis://localhost:6379/2"
-    REDIS_URL = "redis://localhost:6379"
-    CACHE_TYPE = "RedisCache"
-    CACHE_DEFAULT_TIMEOUT = 300
-    CACHE_REDIS_HOST = "localhost"
-    CACHE_REDIS_PORT = 6379
-    CACHE_REDIS_DB = 9
