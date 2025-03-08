@@ -133,4 +133,16 @@ export default {
 </script>
 
 <style scoped>
+  .header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .header h1{
+    font-size: 50px;
+    margin: 0px;
+    font-weight: 550;
+  }
 </style>
